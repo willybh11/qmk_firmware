@@ -1,103 +1,34 @@
 #include QMK_KEYBOARD_H
-// this is the new layout!
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-    /* Layer 0
-     * ,-----------------------------------------------------------------------------------.
-     * | Esc  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
-     * |------+------+------+------+------+-------------+------+------+------+------+------|
-     * | Tab  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  "   |
-     * |------+------+------+------+------+------|------+------+------+------+------+------|
-     * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |  Up  |Enter |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | Ctrl |  GUI | Caps |  Alt |Layer1|      |Space |Layer2|  /   | Left | Down |Right |
-     * `-----------------------------------------------------------------------------------'
-     */
-    [0] = LAYOUT_ortho_4x12(
-        KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,   KC_Y,   KC_U,  KC_I,    KC_O,    KC_P,    KC_BSPC,
-        KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,  KC_G,   KC_H,   KC_J,  KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,  KC_B,   KC_N,   KC_M,  KC_COMM, KC_DOT,  KC_UP,   KC_ENT,
-        KC_LCTL, KC_LGUI, KC_CAPS, KC_LALT, MO(1), KC_SPC, KC_LSFT,MO(2), KC_SLSH, KC_LEFT, KC_DOWN, KC_RGHT
-    ),
 
-    /* Layer 1
-     * ,-----------------------------------------------------------------------------------.
-     * |   `  |      | prev | play | next |   (  |   )  |      |      |      |      |      |
-     * |------+------+------+------+------+-------------+------+------+------+------+------|
-     * |      |      | mute | Vol- | Vol+ |   [  |   ]  |   -  |   =  |      |      |   \  |
-     * |------+------+------+------+------+------|------+------+------+------+------+------|
-     * |      |      |      |      |      |   {  |   }  |      |      |      |      |      |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | Reset|      |      |      |      |      |      |      |      |      |      |      |
-     * `-----------------------------------------------------------------------------------'
-     */
-    [1] = LAYOUT_ortho_4x12(
-        KC_GRV,  _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_LPRN, KC_RPRN, _______, _______, _______, _______, KC_DEL,
-        _______, _______, KC_MUTE, KC_VOLU, KC_VOLD, KC_LBRC, KC_RBRC, KC_MINS, KC_EQL,  _______, _______, KC_BSLS,
-        _______, _______, _______, _______, _______, KC_LCBR, KC_RCBR, _______, _______, _______, _______, _______,
-        RESET,   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-    ),
+#define _LAYER0 0
+#define _LAYER1 1
+#define _LAYER2 2
 
-    /* Layer 2 (r_ Indicates RGB Controls)
-     * ,-----------------------------------------------------------------------------------.
-     * |r_TOG |r_Mode|  f7  |  f8  |  f9  |  f10 |      |   7  |   8  |  9   |      |      |
-     * |------+------+------+------+------+-------------+------+------+------+------+------|
-     * |r_Hue+|r_Hue-|  f4  |  f5  |  f6  |  f11 |      |   4  |   5  |  6   |      |      |
-     * |------+------+------+------+------+------|------+------+------+------+------+------|
-     * |r_Sat+|r_Sat-|  f1  |  f2  |  f3  |  f12 |      |   1  |   2  |  3   |      |      |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |r_bri+|r_bri-|      |      |      |      |      |      |   0  |      |      |      |
-     * `-----------------------------------------------------------------------------------'
-     */
-    [2] = LAYOUT_ortho_4x12(
-        RGB_TOG, RGB_MOD, KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______, KC_7,    KC_8,    KC_9,    _______,_______,
-        RGB_HUI, RGB_HUD, KC_F4,   KC_F5,   KC_F6,   KC_F11,  _______, KC_4,    KC_5,    KC_6,    _______, _______, 
-        RGB_SAI, RGB_SAD, KC_F1,   KC_F2,   KC_F3,   KC_F12,  _______, KC_1,    KC_2,    KC_3,    _______,_______,
-        RGB_VAI, RGB_VAD, _______, _______, _______, _______, _______, _______, KC_0,    _______, _______, _______
-    )
+enum custom_keycodes {
+    LAYER0 = SAFE_RANGE,
+    LAYER1,
+    LAYER2,
 };
 
+ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-void matrix_init_user(void) {
-}
+ [_LAYER0] = LAYOUT(
+    KC_NO, KC_Q,  KC_W,  KC_E,    KC_R,  KC_T,   KC_Y,            KC_U,  KC_I,    KC_O,   KC_P,   KC_NO, 
+    KC_NO, KC_A,  KC_S,  KC_D,    KC_F,  KC_G,   KC_H,            KC_J,  KC_K,    KC_L,   KC_ENT, KC_NO, 
+    KC_NO, KC_Z,  KC_X,  KC_C,    KC_V,  KC_B,   KC_N,            KC_M,  KC_COMM, KC_DOT, KC_TAB, KC_NO, 
+    KC_NO, KC_NO, KC_NO, KC_LALT, MO(1), KC_SPC, LSFT_T(KC_BSPC), MO(2), KC_LCTL, KC_NO,  KC_NO,  KC_NO),
 
-void matrix_scan_user(void) {
-}
+[_LAYER1] = LAYOUT(
+    KC_NO, KC_NO,   KC_VOLD, KC_UP,   KC_VOLU, KC_NO,   KC_NO,   KC_NO,   KC_NO,  KC_NO,   KC_ESC,  KC_NO, 
+    KC_NO, KC_LGUI, KC_LEFT, KC_DOWN, KC_RGHT, KC_LPRN, KC_RPRN, KC_MINS, KC_EQL, KC_QUOT, KC_SCLN, KC_NO, 
+    KC_NO, KC_NO,   KC_MPRV, KC_MPLY, KC_MNXT, KC_LBRC, KC_RBRC, KC_NO,   KC_NO,  KC_NO,   KC_SLSH, KC_NO, 
+    KC_NO, KC_TRNS, KC_NO,   KC_TRNS, KC_NO,   KC_TRNS, KC_DEL,  KC_NO,   KC_NO,  KC_NO,   KC_TRNS, KC_NO),
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    return true;
-}
+[_LAYER2] = LAYOUT(
+    KC_NO, RESET,  KC_F7,  KC_F8,   KC_F9, KC_F10,  KC_NO,   KC_7,  KC_8, KC_9,  KC_NO,   KC_NO, 
+    KC_NO, KC_NO,  KC_F4,  KC_F5,   KC_F6, KC_F11,  KC_NO,   KC_4,  KC_5, KC_6,  KC_LSFT, KC_NO, 
+    KC_NO, KC_NO,  KC_F1,  KC_F2,   KC_F3, KC_F12,  KC_NO,   KC_1,  KC_2, KC_3,  KC_BSLS, KC_NO, 
+    KC_NO, KC_TRNS, KC_NO, KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_NO, KC_0, KC_NO, KC_NO,   KC_NO) 
 
-void led_set_user(uint8_t usb_led) {
-
-    if (IS_LED_ON(usb_led, USB_LED_NUM_LOCK)) {
-
-    } else {
-
-    }
-
-    if (IS_LED_ON(usb_led, USB_LED_CAPS_LOCK)) {
-
-    } else {
-
-    }
-
-    if (IS_LED_ON(usb_led, USB_LED_SCROLL_LOCK)) {
-
-    } else {
-
-    }
-
-    if (IS_LED_ON(usb_led, USB_LED_COMPOSE)) {
-
-    } else {
-
-    }
-
-    if (IS_LED_ON(usb_led, USB_LED_KANA)) {
-
-    } else {
-
-    }
-
-}
+};
